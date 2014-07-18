@@ -19,13 +19,13 @@ router.post('/register', function(req, res) {
 
 	// initialize the stormpath client
 	var apiKey = new stormpath.ApiKey(
-		variables.env['STORMPATH_API_KEY_ID'],
-		variables.env['STORMPATH_API_KEY_SECRET']
+		process.env['STORMPATH_API_KEY_ID'],
+		process.env['STORMPATH_API_KEY_SECRET']
 	);
 	var spClient = new stormpath.Client({apiKey: apiKey});
 
 	// grab our app, then attempt to create the user's account
-	var app = spClient.getApplication(variables.env['STORMPATH_APP_HREF'], function(err, app) {
+	var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
 		if (err)
 			throw err;
 

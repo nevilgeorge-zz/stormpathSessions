@@ -10,9 +10,8 @@ var StormpathStrategy = require('passport-stormpath');
 var session = require('express-session');
 var flash = require('connect-flash');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
+var index_routes = require('./routes/index');
+var auth_routes = require('/routes/auth');
 var app = express();
 
 var strategy = new StormpathStrategy();
@@ -33,7 +32,7 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-    secret: variables.env.EXPRESS_SECRET,
+    secret: process.env.EXPRESS_SECRET,
     key: 'sid',
     cookie: {secure: false}
 }));
@@ -41,8 +40,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/', index_routes);
+app.use('/', auth_users);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
